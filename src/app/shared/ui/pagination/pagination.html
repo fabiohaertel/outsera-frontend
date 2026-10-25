@@ -1,0 +1,60 @@
+<nav aria-label="Pagination">
+  <ul class="pagination pagination-sm justify-content-center mb-0">
+    <li class="page-item" [class.disabled]="isFirst()">
+      <button
+        type="button"
+        class="page-link"
+        aria-label="First page"
+        [disabled]="isFirst()"
+        (click)="goTo(0)"
+      >
+        <span aria-hidden="true">&laquo;</span>
+      </button>
+    </li>
+    <li class="page-item" [class.disabled]="isFirst()">
+      <button
+        type="button"
+        class="page-link"
+        aria-label="Previous page"
+        [disabled]="isFirst()"
+        (click)="goTo(page() - 1)"
+      >
+        <span aria-hidden="true">&lsaquo;</span>
+      </button>
+    </li>
+    @for (pageIndex of visiblePages(); track pageIndex) {
+      <li class="page-item" [class.active]="pageIndex === page()">
+        <button
+          type="button"
+          class="page-link"
+          [attr.aria-current]="pageIndex === page() ? 'page' : null"
+          (click)="goTo(pageIndex)"
+        >
+          {{ pageIndex + 1 }}
+        </button>
+      </li>
+    }
+    <li class="page-item" [class.disabled]="isLast()">
+      <button
+        type="button"
+        class="page-link"
+        aria-label="Next page"
+        [disabled]="isLast()"
+        (click)="goTo(page() + 1)"
+      >
+        <span aria-hidden="true">&rsaquo;</span>
+      </button>
+    </li>
+    <li class="page-item" [class.disabled]="isLast()">
+      <button
+        type="button"
+        class="page-link"
+        aria-label="Last page"
+        [disabled]="isLast()"
+        (click)="goTo(totalPages() - 1)"
+      >
+        <span aria-hidden="true">&raquo;</span>
+      </button>
+    </li>
+  </ul>
+</nav>

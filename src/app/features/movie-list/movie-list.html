@@ -1,0 +1,68 @@
+<section class="card shadow-sm">
+  <div class="card-body">
+    <h1 class="card-title h6 fw-bold mb-3">List movies</h1>
+
+    <div class="table-responsive">
+      <table class="table table-sm table-bordered table-striped align-middle mb-3">
+        <thead>
+          <tr class="text-center">
+            <th scope="col" class="col-id">ID</th>
+            <th scope="col" class="col-year">
+              Year
+              <input
+                #yearFilter
+                type="number"
+                class="form-control form-control-sm mt-1"
+                placeholder="Filter by year"
+                aria-label="Filter by year"
+                (input)="onYearInput(yearFilter.value)"
+              />
+            </th>
+            <th scope="col">Title</th>
+            <th scope="col" class="col-winner">
+              Winner?
+              <select
+                #winnerFilter
+                class="form-select form-select-sm mt-1"
+                aria-label="Filter by winner"
+                (change)="onWinnerChange(winnerFilter.value)"
+              >
+                <option value="">Yes/No</option>
+                <option value="true">Yes</option>
+                <option value="false">No</option>
+              </select>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          @if (movies.hasValue()) {
+            @for (movie of movies.value().content; track movie.id) {
+              <tr>
+                <td>{{ movie.id }}</td>
+                <td>{{ movie.year }}</td>
+                <td>{{ movie.title }}</td>
+                <td>{{ movie.winner | yesNo }}</td>
+              </tr>
+            } @empty {
+              <tr>
+                <td colspan="4" class="text-center text-body-secondary">No movies found</td>
+              </tr>
+            }
+          } @else {
+            <tr>
+              <td colspan="4"><app-resource-state [resource]="movies" /></td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+
+    @if (movies.hasValue() && movies.value().totalPages > 1) {
+      <app-pagination
+        [page]="page()"
+        [totalPages]="movies.value().totalPages"
+        (pageChange)="page.set($event)"
+      />
+    }
+  </div>
+</section>

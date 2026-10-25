@@ -1,0 +1,26 @@
+<header class="navbar navbar-dark bg-dark px-3">
+  <span class="navbar-brand fs-6 mb-0">Frontend Angular Test</span>
+</header>
+
+<div class="app-body">
+  <nav class="app-sidebar bg-body-tertiary border-end p-3" aria-label="Main menu">
+    <ul class="nav nav-pills flex-column gap-1">
+      @for (link of links; track link.path) {
+        <li class="nav-item">
+          <a
+            class="nav-link py-1"
+            [routerLink]="link.path"
+            routerLinkActive="active"
+            ariaCurrentWhenActive="page"
+          >
+            {{ link.label }}
+          </a>
+        </li>
+      }
+    </ul>
+  </nav>
+
+  <main class="app-content p-3 p-lg-4">
+    <router-outlet />
+  </main>
+</div>
